@@ -12,7 +12,7 @@ import Chat from './screens/Chat';
 
 // redux stuff
 import {useDispatch, connect} from 'react-redux';
-import {IS_AUTHENTICATED, SET_USER} from './action/action.types';
+import {IS_AUTHENTICATED, IS_CREATED, SET_USER} from './action/action.types';
 import {signOut} from './action/auth';
 
 import auth from '@react-native-firebase/auth';
@@ -31,7 +31,7 @@ const Routes = ({authState, signOut}) => {
         payload: true,
       });
 
-      if (user.metadata.lastSignInTime == user.metadata.creationTime) {
+      if (authState.created) {
         const data = {
           uid: user.uid,
           name: user.displayName,
@@ -44,7 +44,12 @@ const Routes = ({authState, signOut}) => {
           .collection('users')
           .doc(data.uid)
           .set(data, {merge: true})
-          .then(() => console.log('USER CREATED'))
+          .then(() =>
+            dispatch({
+              type: IS_CREATED,
+              payload: false,
+            }),
+          )
           .catch(e => console.log(e));
       }
 
@@ -100,7 +105,11 @@ const Routes = ({authState, signOut}) => {
             </>
           ) : (
             <>
-              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{title: 'Sign In'}}
+              />
             </>
           )}
         </Stack.Navigator>

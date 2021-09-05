@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 // Firebase Google Login imports
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -50,15 +51,7 @@ export const FBSignIn = () => async dispatch => {
   );
 
   // Sign-in the user with the credential
-  auth()
-    .signInWithCredential(facebookCredential)
-    .then(() => {
-      // Success SignIn
-    })
-    .catch(err => {
-      // Signin Error
-      console.log(err);
-    });
+  return auth().signInWithCredential(facebookCredential);
 };
 
 export const signOut = () => async dispatch => {

@@ -1,8 +1,9 @@
-import {IS_AUTHENTICATED, SET_USER} from '../action/action.types';
+import {IS_AUTHENTICATED, IS_CREATED, SET_USER} from '../action/action.types';
 
 const initialState = {
   user: null,
   isAuthenticated: false,
+  created: true,
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +18,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: action.payload,
+      };
+
+    case IS_CREATED:
+      return {
+        ...state,
+        created: action.payload,
       };
 
     default:

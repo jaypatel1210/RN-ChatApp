@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Text, Button} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -9,24 +9,36 @@ import {FBSignIn, GSignIn} from '../action/auth';
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 
 const Login = ({GSignIn, FBSignIn}) => {
-  const openGSignIn = async () => {
-    GSignIn();
-  };
-
-  const openFBSignIn = async () => {
-    FBSignIn();
-  };
-
   return (
     <>
-      <GoogleSigninButton
-        style={{width: 192, height: 48}}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={() => openGSignIn()}
-      />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <GoogleSigninButton
+          style={{width: 192, height: 48}}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={() => GSignIn()}
+        />
 
-      <Button title="Facebook Sign-In" onPress={() => openFBSignIn()} />
+        <TouchableOpacity
+          onPress={() => FBSignIn()}
+          style={{
+            backgroundColor: '#4267B2',
+            paddingHorizontal: 20,
+            paddingVertical: 13,
+            borderRadius: 3,
+            elevation: 5,
+            marginTop: 15,
+          }}>
+          <Text style={{color: '#fff', fontWeight: '800'}}>
+            Sign In With Facebook
+          </Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
@@ -42,3 +54,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(Login);
+
+const styles = StyleSheet.create({});

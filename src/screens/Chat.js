@@ -64,9 +64,14 @@ const Chat = ({route, userDetails, msgDetails, getAllMsgs, sendMsg}) => {
             />
           ))
         ) : (
-          <>
-            <Text>No Msg found</Text>
-          </>
+          <View
+            style={{
+              alignItems: 'center',
+              backgroundColor: '#e2e0e0',
+              paddingVertical: 10,
+            }}>
+            <Text>No Message Found</Text>
+          </View>
         )}
 
         <View style={{height: 80}}></View>
