@@ -31,10 +31,7 @@ const Routes = ({authState, signOut}) => {
         payload: true,
       });
 
-      if (
-        user.metadata.lastSignInTime == user.metadata.creationTime &&
-        authState.created
-      ) {
+      if (user.metadata.lastSignInTime == user.metadata.creationTime) {
         const data = {
           uid: user.uid,
           name: user.displayName,
