@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   Text,
   View,
@@ -17,6 +17,7 @@ import ChatMessage from '../components/ChatMessage';
 const Chat = ({route, userDetails, msgDetails, getAllMsgs, sendMsg}) => {
   const [msg, setMsg] = useState('');
   const [height, setHeight] = useState(0);
+  const scrollViewRef = useRef();
 
   const {rUID} = route.params;
 
@@ -43,21 +44,24 @@ const Chat = ({route, userDetails, msgDetails, getAllMsgs, sendMsg}) => {
 
   return (
     <>
-      <ScrollView style={{marginHorizontal: 10}}>
+      <ScrollView
+        style={{marginHorizontal: 10}}
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({animated: true})
+        }>
         {msgDetails.loading ? (
           <>
             <ActivityIndicator size="large" />
           </>
         ) : msgDetails.msgs.length > 0 ? (
           msgDetails.msgs.map((msg, index) => (
-            <>
-              <ChatMessage
-                msg={msg}
-                rDetails={route.params}
-                sImg={userDetails.photoURL}
-                key={index}
-              />
-            </>
+            <ChatMessage
+              msg={msg}
+              rDetails={route.params}
+              sImg={userDetails.photoURL}
+              key={index}
+            />
           ))
         ) : (
           <>

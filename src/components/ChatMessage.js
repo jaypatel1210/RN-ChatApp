@@ -5,6 +5,8 @@ const ChatMessage = ({msg, rDetails, sImg}) => {
   let side = false,
     img = sImg;
 
+  const date = new Date(msg.created.seconds * 1000);
+
   if (msg.senderUID == rDetails.rUID) {
     side = true;
     img = rDetails.rImg;
@@ -26,6 +28,13 @@ const ChatMessage = ({msg, rDetails, sImg}) => {
             side ? styles.leftBgColor : styles.rightBgColor,
           ]}>
           <Text style={[!side && styles.leftText]}>{msg.msg}</Text>
+          <Text
+            style={[
+              !side && styles.leftText,
+              {fontSize: 9, marginTop: 5},
+            ]}>{`${date.getHours()}:${date.getMinutes()} ${
+            date.getHours() >= 12 ? 'PM' : 'AM'
+          }`}</Text>
         </View>
       </View>
     </>
@@ -47,6 +56,7 @@ const styles = StyleSheet.create({
   },
   leftText: {
     color: '#fff',
+    textAlign: 'right',
   },
   imgWrapper: {
     justifyContent: 'flex-end',

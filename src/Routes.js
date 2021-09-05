@@ -13,13 +13,15 @@ import Chat from './screens/Chat';
 // redux stuff
 import {useDispatch, connect} from 'react-redux';
 import {IS_AUTHENTICATED, SET_USER} from './action/action.types';
+import {signOut} from './action/auth';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {Text, TouchableOpacity} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
-const Routes = ({authState}) => {
+const Routes = ({authState, signOut}) => {
   const dispatch = useDispatch();
 
   const onAuthStateChanged = user => {
@@ -81,7 +83,18 @@ const Routes = ({authState}) => {
           }}>
           {authState.isAuthenticated ? (
             <>
-              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{
+                  title: 'Chat',
+                  headerRight: () => (
+                    <TouchableOpacity onPress={() => signOut()}>
+                      <Text style={{color: '#fff', fontSize: 15}}>Signout</Text>
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
               <Stack.Screen
                 name="Chat"
                 component={Chat}
@@ -103,4 +116,8 @@ const mapStateToProps = state => ({
   authState: state.auth,
 });
 
-export default connect(mapStateToProps)(Routes);
+const mapDispatchToProps = {
+  signOut,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);

@@ -60,3 +60,9 @@ export const FBSignIn = () => async dispatch => {
       console.log(err);
     });
 };
+
+export const signOut = () => async dispatch => {
+  auth()
+    .signOut()
+    .catch(err => console.log(`SIGNOUT Err => ${err}`));
+};
