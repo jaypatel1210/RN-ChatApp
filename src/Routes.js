@@ -12,12 +12,18 @@ import Chat from './screens/Chat';
 
 // redux stuff
 import {useDispatch, connect} from 'react-redux';
-import {IS_AUTHENTICATED, IS_CREATED, SET_USER} from './action/action.types';
+import {
+  IS_AUTHENTICATED,
+  IS_CREATED,
+  IS_LOADING,
+  SET_USER,
+} from './action/action.types';
 import {signOut} from './action/auth';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Text, TouchableOpacity} from 'react-native';
+import SplashScreen from './SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -63,12 +69,20 @@ const Routes = ({authState, signOut}) => {
         payload: false,
       });
     }
+    dispatch({
+      type: IS_LOADING,
+      payload: false,
+    });
   };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
+
+  if (authState.isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <>

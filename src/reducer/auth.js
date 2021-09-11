@@ -1,9 +1,15 @@
-import {IS_AUTHENTICATED, IS_CREATED, SET_USER} from '../action/action.types';
+import {
+  IS_AUTHENTICATED,
+  IS_CREATED,
+  IS_LOADING,
+  SET_USER,
+} from '../action/action.types';
 
 const initialState = {
   user: null,
-  isAuthenticated: false,
+  isAuthenticated: null,
   created: true,
+  isLoading: true,
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +30,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         created: action.payload,
+      };
+    case IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
 
     default:

@@ -1,6 +1,7 @@
 export const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const IS_CREATED = 'IS_CREATED';
+export const IS_LOADING = 'IS_LOADING';
 
 export const ALL_USERS = 'ALL_USERS';
 export const ERROR_USERS = 'ERROR_USERS';
